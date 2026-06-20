@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolBox — Ücretsiz Online Araçlar | QR Kod, Renk Paleti, JSON ve Daha Fazlası</title>
+    <meta name="description" content="ToolBox ile QR Kod oluşturun, renk paletleri keşfedin, JSON formatlanın, güçlü şifreler üretin. Tamamen ücretsiz, kayıt gerektirmez.">
+    <meta name="keywords" content="online araçlar, qr kod oluşturucu, renk paleti, json formatlayıcı, şifre oluşturucu, kelime sayacı, ücretsiz araçlar">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Ambient Orbs -->
+    <div class="ambient">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="logo" onclick="showHome()">
+                <span class="logo-box">⚡</span>
+                <span class="logo-text">Tool<span class="logo-accent">Box</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="#tools" class="nav-link">Araçlar</a>
+                <a href="#about" class="nav-link">Hakkımızda</a>
+            </div>
+            <button class="nav-hamburger" id="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==================== HOME ==================== -->
+    <div id="homePage">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">🚀 100% ÜCRETSİZ — KAYIT GEREKTIRMEZ</div>
+                <h1 class="hero-title">İhtiyacınız Olan<br><span class="hero-gradient">Tüm Araçlar</span> Burada</h1>
+                <p class="hero-desc">QR Kod oluşturun, renk paletleri keşfedin, JSON dosyalarınızı formatlayın, güçlü şifreler üretin. Tek tıkla, ücretsiz.</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-num">6</span>
+                        <span class="stat-label">Araç</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-num">0₺</span>
+                        <span class="stat-label">Maliyet</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-num">∞</span>
+                        <span class="stat-label">Kullanım</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Grid -->
+        <section class="tools-section" id="tools">
+            <div class="section-inner">
+                <h2 class="section-title">Araçlar</h2>
+                <p class="section-sub">İhtiyacınıza uygun aracı seçin ve hemen kullanmaya başlayın.</p>
+                <div class="tools-grid">
+                    <!-- QR Code -->
+                    <div class="tool-card" onclick="openTool('qrcode')">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><line x1="21" y1="14" x2="21" y2="21"/><line x1="14" y1="21" x2="21" y2="21"/></svg>
+                        </div>
+                        <h3 class="tool-name">QR Kod Oluşturucu</h3>
+                        <p class="tool-desc">Metin, URL veya iletişim bilgilerinden anında QR kod oluşturun ve indirin.</p>
+                        <span class="tool-tag">Popüler 🔥</span>
+                    </div>
+                    <!-- Color Palette -->
+                    <div class="tool-card" onclick="openTool('palette')">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #ec4899, #db2777);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="8" r="1.5" fill="white"/><circle cx="8" cy="12" r="1.5" fill="white"/><circle cx="16" cy="12" r="1.5" fill="white"/><circle cx="12" cy="16" r="1.5" fill="white"/></svg>
+                        </div>
+                        <h3 class="tool-name">Renk Paleti Oluşturucu</h3>
+                        <p class="tool-desc">Uyumlu renk paletleri oluşturun, HEX/RGB kodlarını kopyalayın.</p>
+                        <span class="tool-tag">Tasarım</span>
+                    </div>
+                    <!-- Word Counter -->
+                    <div class="tool-card" onclick="openTool('counter')">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h12"/></svg>
+                        </div>
+                        <h3 class="tool-name">Kelime & Karakter Sayacı</h3>
+                        <p class="tool-desc">Metin istatistiklerinizi anında görün: kelime, karakter, cümle, paragraf.</p>
+                        <span class="tool-tag">Yazarlık</span>
+                    </div>
+                    <!-- JSON -->
+                    <div class="tool-card" onclick="openTool('json')">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M8 3H7a2 2 0 00-2 2v5a2 2 0 01-2 2 2 2 0 012 2v5a2 2 0 002 2h1"/><path d="M16 3h1a2 2 0 012 2v5a2 2 0 002 2 2 2 0 00-2 2v5a2 2 0 01-2 2h-1"/></svg>
+                        </div>
+                        <h3 class="tool-name">JSON Formatlayıcı</h3>
+                        <p class="tool-desc">JSON verilerinizi güzelleştirin, doğrulayın ve küçültün (minify).</p>
+                        <span class="tool-tag">Geliştirici</span>
+                    </div>
+                    <!-- Password -->
+                    <div class="tool-card" onclick="openTool('password')">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #34d399, #059669);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                        </div>
+                        <h3 class="tool-name">Şifre Oluşturucu</h3>
+                        <p class="tool-desc">Güvenli, rastgele şifreler üretin. Uzunluk ve karakter seçenekleriyle.</p>
+                        <span class="tool-tag">Güvenlik</span>
+                    </div>
+                    <!-- Lorem Ipsum -->
+                    <div class="tool-card" onclick="openTool('lorem')">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #f472b6, #c026d3);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        </div>
+                        <h3 class="tool-name">Lorem Ipsum Oluşturucu</h3>
+                        <p class="tool-desc">Tasarım projeleriniz için özelleştirilebilir yer tutucu metin oluşturun.</p>
+                        <span class="tool-tag">Tasarım</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="about-section" id="about">
+            <div class="section-inner">
+                <div class="about-grid">
+                    <div class="about-card">
+                        <span class="about-icon">🔒</span>
+                        <h3>Gizlilik Odaklı</h3>
+                        <p>Verileriniz tarayıcınızda işlenir, sunucuya hiçbir şey gönderilmez.</p>
+                    </div>
+                    <div class="about-card">
+                        <span class="about-icon">⚡</span>
+                        <h3>Anında Sonuç</h3>
+                        <p>Tüm araçlar istemci tarafında çalışır. Bekleme süresi sıfır.</p>
+                    </div>
+                    <div class="about-card">
+                        <span class="about-icon">📱</span>
+                        <h3>Her Cihazda</h3>
+                        <p>Masaüstü, tablet ve mobilde mükemmel çalışır.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== TOOL PAGES ==================== -->
+    <div id="toolPage" class="tool-page" style="display:none;">
+        <div class="tool-page-inner">
+            <button class="back-btn" onclick="showHome()">← Tüm Araçlar</button>
+            <div class="tool-header">
+                <div class="tool-header-icon" id="toolHeaderIcon"></div>
+                <div>
+                    <h1 class="tool-header-title" id="toolHeaderTitle"></h1>
+                    <p class="tool-header-desc" id="toolHeaderDesc"></p>
+                </div>
+            </div>
+
+            <!-- QR Code Tool -->
+            <div class="tool-panel" id="tool-qrcode" style="display:none;">
+                <div class="tool-workspace">
+                    <div class="workspace-left">
+                        <div class="input-group">
+                            <label class="input-label">İçerik Türü</label>
+                            <div class="radio-tabs">
+                                <button class="radio-tab active" data-type="text" onclick="setQrType(this,'text')">Metin/URL</button>
+                                <button class="radio-tab" data-type="wifi" onclick="setQrType(this,'wifi')">WiFi</button>
+                                <button class="radio-tab" data-type="email" onclick="setQrType(this,'email')">E-posta</button>
+                            </div>
+                        </div>
+                        <div id="qrInputArea">
+                            <div class="input-group">
+                                <label class="input-label">Metin veya URL</label>
+                                <textarea class="input-textarea" id="qrText" placeholder="https://ornek.com veya herhangi bir metin..." rows="4" oninput="generateQR()"></textarea>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label class="input-label">Boyut</label>
+                                <select class="input-select" id="qrSize" onchange="generateQR()">
+                                    <option value="150">Küçük (150px)</option>
+                                    <option value="250" selected>Orta (250px)</option>
+                                    <option value="400">Büyük (400px)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Renk</label>
+                                <input type="color" class="input-color" id="qrColor" value="#000000" onchange="generateQR()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="workspace-right">
+                        <div class="preview-box">
+                            <div id="qrOutput" class="qr-output">
+                                <p class="preview-hint">← Metin girerek QR kod oluşturun</p>
+                            </div>
+                            <button class="btn-action" id="qrDownloadBtn" style="display:none;" onclick="downloadQR()">📥 PNG Olarak İndir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Palette Tool -->
+            <div class="tool-panel" id="tool-palette" style="display:none;">
+                <div class="palette-controls">
+                    <button class="btn-action btn-primary-action" onclick="generatePalette()">🎲 Rastgele Palet Oluştur</button>
+                    <span class="shortcut-hint">veya <kbd>Boşluk</kbd> tuşuna basın</span>
+                </div>
+                <div class="palette-display" id="paletteDisplay">
+                    <!-- Generated by JS -->
+                </div>
+                <div class="palette-history">
+                    <h3 class="sub-title">📋 Son Paletler</h3>
+                    <div id="paletteHistory" class="history-list"></div>
+                </div>
+            </div>
+
+            <!-- Word Counter Tool -->
+            <div class="tool-panel" id="tool-counter" style="display:none;">
+                <div class="counter-stats" id="counterStats">
+                    <div class="counter-stat">
+                        <span class="counter-num" id="cntWords">0</span>
+                        <span class="counter-label">Kelime</span>
+                    </div>
+                    <div class="counter-stat">
+                        <span class="counter-num" id="cntChars">0</span>
+                        <span class="counter-label">Karakter</span>
+                    </div>
+                    <div class="counter-stat">
+                        <span class="counter-num" id="cntSentences">0</span>
+                        <span class="counter-label">Cümle</span>
+                    </div>
+                    <div class="counter-stat">
+                        <span class="counter-num" id="cntParagraphs">0</span>
+                        <span class="counter-label">Paragraf</span>
+                    </div>
+                    <div class="counter-stat">
+                        <span class="counter-num" id="cntReadTime">0 dk</span>
+                        <span class="counter-label">Okuma Süresi</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <textarea class="input-textarea large" id="counterText" placeholder="Metninizi buraya yapıştırın veya yazmaya başlayın..." oninput="updateCounter()"></textarea>
+                </div>
+                <div class="counter-extras" id="counterExtras">
+                    <div class="extra-item">
+                        <span class="extra-label">Boşluksuz Karakter</span>
+                        <span class="extra-value" id="cntCharsNoSpace">0</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-label">Satır Sayısı</span>
+                        <span class="extra-value" id="cntLines">0</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-label">Ortalama Kelime Uzunluğu</span>
+                        <span class="extra-value" id="cntAvgWord">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JSON Formatter Tool -->
+            <div class="tool-panel" id="tool-json" style="display:none;">
+                <div class="json-actions">
+                    <button class="btn-action" onclick="formatJSON()">✨ Formatla (Beautify)</button>
+                    <button class="btn-action btn-outline" onclick="minifyJSON()">📦 Küçült (Minify)</button>
+                    <button class="btn-action btn-outline" onclick="copyJSON()">📋 Kopyala</button>
+                    <button class="btn-action btn-outline" onclick="clearJSON()">🗑 Temizle</button>
+                </div>
+                <div class="json-status" id="jsonStatus"></div>
+                <div class="json-workspace">
+                    <div class="json-col">
+                        <label class="input-label">Giriş (JSON)</label>
+                        <textarea class="input-textarea code-font" id="jsonInput" placeholder='{"isim": "Ali", "yas": 25}' oninput="validateJSON()"></textarea>
+                    </div>
+                    <div class="json-col">
+                        <label class="input-label">Çıkış</label>
+                        <textarea class="input-textarea code-font" id="jsonOutput" readonly placeholder="Formatlanmış JSON burada görünecek..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password Generator Tool -->
+            <div class="tool-panel" id="tool-password" style="display:none;">
+                <div class="password-display">
+                    <input type="text" class="password-output" id="passwordOutput" readonly value="Oluşturmak için butona basın">
+                    <button class="password-copy" onclick="copyPassword()" title="Kopyala">📋</button>
+                </div>
+                <div class="password-strength" id="passwordStrength">
+                    <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+                    <span class="strength-text" id="strengthText">—</span>
+                </div>
+                <div class="password-options">
+                    <div class="input-group">
+                        <label class="input-label">Uzunluk: <strong id="pwLengthVal">16</strong></label>
+                        <input type="range" class="input-range" id="pwLength" min="6" max="64" value="16" oninput="updatePwLength()">
+                    </div>
+                    <div class="checkbox-options">
+                        <label class="checkbox-opt"><input type="checkbox" id="pwUpper" checked onchange="genPassword()"> Büyük Harf (A-Z)</label>
+                        <label class="checkbox-opt"><input type="checkbox" id="pwLower" checked onchange="genPassword()"> Küçük Harf (a-z)</label>
+                        <label class="checkbox-opt"><input type="checkbox" id="pwNumbers" checked onchange="genPassword()"> Rakamlar (0-9)</label>
+                        <label class="checkbox-opt"><input type="checkbox" id="pwSymbols" checked onchange="genPassword()"> Semboller (!@#$%)</label>
+                    </div>
+                </div>
+                <button class="btn-action btn-primary-action full-width" onclick="genPassword()">🔄 Yeni Şifre Oluştur</button>
+                <div class="password-bulk">
+                    <h3 class="sub-title">Toplu Oluşturucu</h3>
+                    <p style="color:var(--text-muted);font-size:13px;margin-bottom:12px;">Aynı ayarlarla birden fazla şifre oluşturun.</p>
+                    <div class="input-row">
+                        <div class="input-group" style="flex:1;">
+                            <label class="input-label">Adet</label>
+                            <input type="number" class="input-field" id="pwBulkCount" value="5" min="1" max="50">
+                        </div>
+                        <button class="btn-action" onclick="genBulkPasswords()" style="align-self:flex-end;">Oluştur</button>
+                    </div>
+                    <div id="bulkPasswordOutput" class="bulk-output"></div>
+                </div>
+            </div>
+
+            <!-- Lorem Ipsum Tool -->
+            <div class="tool-panel" id="tool-lorem" style="display:none;">
+                <div class="lorem-options">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label class="input-label">Tür</label>
+                            <select class="input-select" id="loremType">
+                                <option value="paragraphs">Paragraf</option>
+                                <option value="sentences">Cümle</option>
+                                <option value="words">Kelime</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Adet</label>
+                            <input type="number" class="input-field" id="loremCount" value="3" min="1" max="50">
+                        </div>
+                        <button class="btn-action btn-primary-action" onclick="generateLorem()" style="align-self:flex-end;">Oluştur</button>
+                    </div>
+                    <label class="checkbox-opt" style="margin-top:8px;">
+                        <input type="checkbox" id="loremStartClassic" checked> "Lorem ipsum dolor sit amet..." ile başla
+                    </label>
+                </div>
+                <div class="lorem-output-area">
+                    <div class="lorem-toolbar">
+                        <span class="lorem-info" id="loremInfo">0 kelime · 0 karakter</span>
+                        <button class="btn-action btn-sm" onclick="copyLorem()">📋 Kopyala</button>
+                    </div>
+                    <div class="lorem-text" id="loremOutput">Oluşturmak için yukarıdaki butona basın.</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="siteFooter">
+        <div class="section-inner">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="logo footer-logo" onclick="showHome()">
+                        <span class="logo-box">⚡</span>
+                        <span class="logo-text">Tool<span class="logo-accent">Box</span></span>
+                    </a>
+                    <p class="footer-desc">Ücretsiz online araçlar. Verileriniz güvende — her şey tarayıcınızda çalışır.</p>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Araçlar</h4>
+                    <a href="#" onclick="openTool('qrcode')" class="footer-link">QR Kod Oluşturucu</a>
+                    <a href="#" onclick="openTool('palette')" class="footer-link">Renk Paleti</a>
+                    <a href="#" onclick="openTool('counter')" class="footer-link">Kelime Sayacı</a>
+                    <a href="#" onclick="openTool('json')" class="footer-link">JSON Formatlayıcı</a>
+                    <a href="#" onclick="openTool('password')" class="footer-link">Şifre Oluşturucu</a>
+                    <a href="#" onclick="openTool('lorem')" class="footer-link">Lorem Ipsum</a>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Yasal</h4>
+                    <a href="#" class="footer-link">Gizlilik Politikası</a>
+                    <a href="#" class="footer-link">Kullanım Şartları</a>
+                    <a href="#" class="footer-link">Çerez Politikası</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 ToolBox. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
