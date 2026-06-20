@@ -612,7 +612,20 @@ function convertWordToPdf() {
                 status.innerText = "⏳ PDF oluşturuluyor...";
                 
                 const element = document.createElement('div');
-                element.innerHTML = html;
+                element.innerHTML = `
+                <style>
+                    /* Sayfa bölme hatalarını engellemek için CSS kuralları */
+                    img, p, h1, h2, h3, h4, h5, h6, table, tr, td, ul, li {
+                        page-break-inside: avoid;
+                        break-inside: avoid;
+                    }
+                    img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                </style>
+                ${html}`;
+                
                 // PDF için temel stil ayarları
                 element.style.padding = '30px';
                 element.style.fontFamily = 'Arial, sans-serif';
@@ -620,11 +633,12 @@ function convertWordToPdf() {
                 element.style.color = '#1a1a1a';
                 
                 const opt = {
-                    margin:       1,
+                    margin:       [0.6, 0.5, 0.6, 0.5], // Üst, Sağ, Alt, Sol kenar boşlukları (inch)
                     filename:     file.name.replace('.docx', '.pdf'),
                     image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2 },
-                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
+                    pagebreak:    { mode: ['css', 'legacy'] } // Sayfa bölmeyi akıllıca yap
                 };
                 
                 html2pdf().set(opt).from(element).save().then(() => {
