@@ -8,6 +8,7 @@ window.addEventListener('scroll', () => {
 });
 
 const toolMeta = {
+    'pdf-converter': { title: 'PDF ⇄ Word Dönüştürücü', desc: 'Dosyalarınız tarayıcı içinde işlenir, sunucuya hiçbir veri gönderilmez.', icon: '📄' },
     qrcode:   { title:'QR Kod Oluşturucu',        desc:'Metin veya URL\'den QR kod üretin.',       icon:'📱', bg:'linear-gradient(135deg,#8b5cf6,#6d28d9)' },
     palette:  { title:'Renk Paleti Oluşturucu',    desc:'Uyumlu renk paletleri keşfedin.',          icon:'🎨', bg:'linear-gradient(135deg,#ec4899,#db2777)' },
     counter:  { title:'Kelime & Karakter Sayacı',  desc:'Metin istatistiklerinizi anında görün.',   icon:'📝', bg:'linear-gradient(135deg,#06b6d4,#0891b2)' },
@@ -33,7 +34,7 @@ function openTool(id) {
     document.getElementById('toolHeaderTitle').textContent = meta.title;
     document.getElementById('toolHeaderDesc').textContent = meta.desc;
     const iconEl = document.getElementById('toolHeaderIcon');
-    iconEl.style.background = meta.bg;
+    iconEl.style.background = meta.bg || '#4f46e5';
     iconEl.textContent = meta.icon;
 
     document.querySelectorAll('.tool-panel').forEach(p => p.style.display = 'none');
@@ -512,90 +513,197 @@ function genBulkPasswords() {
 }
 
 // ==================== 6. LOREM IPSUM ====================
-const loremWords = [
-    'lorem','ipsum','dolor','sit','amet','consectetur','adipiscing','elit','sed','do',
-    'eiusmod','tempor','incididunt','ut','labore','et','dolore','magna','aliqua','enim',
-    'ad','minim','veniam','quis','nostrud','exercitation','ullamco','laboris','nisi',
-    'aliquip','ex','ea','commodo','consequat','duis','aute','irure','in','reprehenderit',
-    'voluptate','velit','esse','cillum','fugiat','nulla','pariatur','excepteur','sint',
-    'occaecat','cupidatat','non','proident','sunt','culpa','qui','officia','deserunt',
-    'mollit','anim','id','est','laborum','porta','nibh','venenatis','cras','ornare',
-    'arcu','dui','vivamus','at','augue','eget','pellentesque','habitant','morbi',
-    'tristique','senectus','netus','malesuada','fames','turpis','egestas','maecenas',
-    'pharetra','convallis','posuere','facilisi','curabitur','gravida','primis','faucibus',
-    'orci','luctus','ultrices','accumsan','lacus','vel','facilisis','volutpat','donec',
-    'pretium','vulputate','sapien','nec','sagittis','aliquam','metus','tortor','placerat',
-    'blandit','interdum','feugiat','proin','fermentum','leo','elementum','viverra','tellus',
-    'mauris','vitae','ultricies','integer','tincidunt','praesent','semper','justo'
-];
-
-const classicStart = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ';
-
 function generateLorem() {
     const type = document.getElementById('loremType').value;
-    const count = Math.min(50, parseInt(document.getElementById('loremCount').value) || 3);
+    const count = parseInt(document.getElementById('loremCount').value) || 3;
     const startClassic = document.getElementById('loremStartClassic').checked;
-
+    
+    // Basit bir lorem ipsum üreteci
+    const words = ['lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'aliquip', 'ex', 'ea', 'commodo', 'consequat'];
+    
     let result = '';
-
+    
     if (type === 'words') {
-        const words = [];
-        for (let i = 0; i < count; i++) {
-            words.push(loremWords[Math.floor(Math.random() * loremWords.length)]);
+        const selected = [];
+        if (startClassic && count >= 5) {
+            selected.push('lorem', 'ipsum', 'dolor', 'sit', 'amet');
+            for(let i=0; i<count-5; i++) selected.push(words[Math.floor(Math.random()*words.length)]);
+        } else {
+            for(let i=0; i<count; i++) selected.push(words[Math.floor(Math.random()*words.length)]);
         }
-        if (startClassic && count >= 2) {
-            words[0] = 'lorem';
-            words[1] = 'ipsum';
-        }
-        result = words.join(' ');
-    } else if (type === 'sentences') {
+        result = selected.join(' ') + '.';
+        result = result.charAt(0).toUpperCase() + result.slice(1);
+    } 
+    else if (type === 'sentences') {
         const sentences = [];
-        for (let i = 0; i < count; i++) {
-            const len = 8 + Math.floor(Math.random() * 12);
-            const words = [];
-            for (let j = 0; j < len; j++) {
-                words.push(loremWords[Math.floor(Math.random() * loremWords.length)]);
-            }
-            words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
-            sentences.push(words.join(' ') + '.');
-        }
-        if (startClassic && sentences.length > 0) {
-            sentences[0] = classicStart.trim();
+        for(let i=0; i<count; i++) {
+            const wCount = Math.floor(Math.random() * 8) + 5; // 5-12 kelimelik cümleler
+            let sentenceWords = [];
+            for(let j=0; j<wCount; j++) sentenceWords.push(words[Math.floor(Math.random()*words.length)]);
+            let sentence = sentenceWords.join(' ') + '.';
+            if (i===0 && startClassic) sentence = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+            else sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+            sentences.push(sentence);
         }
         result = sentences.join(' ');
-    } else {
+    }
+    else if (type === 'paragraphs') {
         const paragraphs = [];
-        for (let p = 0; p < count; p++) {
-            const sentCount = 4 + Math.floor(Math.random() * 4);
-            const sentences = [];
-            for (let i = 0; i < sentCount; i++) {
-                const len = 8 + Math.floor(Math.random() * 12);
-                const words = [];
-                for (let j = 0; j < len; j++) {
-                    words.push(loremWords[Math.floor(Math.random() * loremWords.length)]);
-                }
-                words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
-                sentences.push(words.join(' ') + '.');
-            }
-            if (startClassic && p === 0) {
-                sentences[0] = classicStart.trim();
+        for(let i=0; i<count; i++) {
+            const sCount = Math.floor(Math.random() * 4) + 3; // 3-6 cümlelik paragraflar
+            let sentences = [];
+            for(let j=0; j<sCount; j++) {
+                const wCount = Math.floor(Math.random() * 8) + 5;
+                let sentenceWords = [];
+                for(let k=0; k<wCount; k++) sentenceWords.push(words[Math.floor(Math.random()*words.length)]);
+                let sentence = sentenceWords.join(' ') + '.';
+                if (i===0 && j===0 && startClassic) sentence = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+                else sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+                sentences.push(sentence);
             }
             paragraphs.push(sentences.join(' '));
         }
         result = paragraphs.join('\n\n');
     }
-
-    document.getElementById('loremOutput').textContent = result;
-
-    const wordCount = result.split(/\s+/).filter(w => w).length;
-    document.getElementById('loremInfo').textContent = `${wordCount} kelime · ${result.length} karakter`;
+    
+    document.getElementById('loremOutput').innerText = result;
+    
+    // Info güncelle
+    const totalWords = result.trim().split(/\s+/).length;
+    const totalChars = result.length;
+    document.getElementById('loremInfo').innerText = `${totalWords} kelime · ${totalChars} karakter`;
 }
 
 function copyLorem() {
-    const text = document.getElementById('loremOutput').textContent;
-    if (!text || text === 'Oluşturmak için yukarıdaki butona basın.') return;
-    navigator.clipboard.writeText(text);
-    showToast('✅ Metin kopyalandı!');
+    const text = document.getElementById('loremOutput').innerText;
+    if(!text || text.includes('Oluşturmak için')) return;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('Metin kopyalandı!');
+    });
+}
+
+// ==================== PDF & WORD DÖNÜŞTÜRÜCÜ ====================
+
+// PDF.js Çalışanı (Worker) Tanımlaması
+if (window['pdfjs-dist/build/pdf']) {
+    window['pdfjs-dist/build/pdf'].GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+}
+
+// 1. Word'den PDF'e (mammoth.js -> HTML -> html2pdf.js)
+function convertWordToPdf() {
+    const fileInput = document.getElementById('wordFileInput');
+    const status = document.getElementById('wordToPdfStatus');
+    
+    if (!fileInput.files.length) {
+        return showToast('Lütfen bir Word (.docx) dosyası seçin!');
+    }
+    
+    const file = fileInput.files[0];
+    status.innerText = "⏳ Dosya okunuyor, lütfen bekleyin...";
+    
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const arrayBuffer = event.target.result;
+        
+        mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+            .then(function(result){
+                const html = result.value; 
+                status.innerText = "⏳ PDF oluşturuluyor...";
+                
+                const element = document.createElement('div');
+                element.innerHTML = html;
+                // PDF için temel stil ayarları
+                element.style.padding = '30px';
+                element.style.fontFamily = 'Arial, sans-serif';
+                element.style.lineHeight = '1.6';
+                element.style.color = '#1a1a1a';
+                
+                const opt = {
+                    margin:       1,
+                    filename:     file.name.replace('.docx', '.pdf'),
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2 },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                
+                html2pdf().set(opt).from(element).save().then(() => {
+                    status.innerText = "✅ Başarıyla PDF olarak indirildi!";
+                    showToast('PDF dönüştürme başarılı!');
+                });
+            })
+            .catch(function(error) {
+                console.error(error);
+                status.innerText = "❌ Hata: Dosya dönüştürülemedi.";
+                showToast('Hata: ' + error.message);
+            });
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+// 2. PDF'ten Word'e (pdf.js -> Metin -> docx.js)
+async function convertPdfToWord() {
+    const fileInput = document.getElementById('pdfFileInput');
+    const status = document.getElementById('pdfToWordStatus');
+    
+    if (!fileInput.files.length) {
+        return showToast('Lütfen bir PDF dosyası seçin!');
+    }
+    
+    const file = fileInput.files[0];
+    status.innerText = "⏳ PDF okunuyor ve metinler çıkarılıyor...";
+    
+    const reader = new FileReader();
+    reader.onload = async function(event) {
+        try {
+            const typedarray = new Uint8Array(event.target.result);
+            const pdf = await window['pdfjs-dist/build/pdf'].getDocument(typedarray).promise;
+            
+            let fullText = "";
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                const pageText = textContent.items.map(item => item.str).join(" ");
+                fullText += pageText + "\n\n";
+            }
+            
+            status.innerText = "⏳ Word dosyası oluşturuluyor...";
+            
+            // DOCX Kütüphanesi ile yeni belge oluştur
+            const { Document, Packer, Paragraph, TextRun } = window.docx;
+            
+            const paragraphs = fullText.split('\n').map(line => {
+                return new Paragraph({
+                    children: [new TextRun(line)]
+                });
+            });
+            
+            const doc = new Document({
+                sections: [{
+                    properties: {},
+                    children: paragraphs
+                }]
+            });
+            
+            Packer.toBlob(doc).then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name.replace('.pdf', '.docx');
+                a.click();
+                window.URL.revokeObjectURL(url);
+                
+                status.innerText = "✅ Başarıyla Word olarak indirildi!";
+                showToast('Word dönüştürme başarılı!');
+            });
+            
+        } catch (error) {
+            console.error(error);
+            status.innerText = "❌ Hata: Dosya okunurken sorun oluştu.";
+            showToast('Hata: Şifreli veya bozuk PDF dosyası.');
+        }
+    };
+    reader.readAsArrayBuffer(file);
 }
 
 // ==================== SCROLL ANIMATION ====================

@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToolBox — Ücretsiz Online Araçlar | QR Kod, Renk Paleti, JSON ve Daha Fazlası</title>
+    <title>Kitoox — Ücretsiz Online Araçlar | PDF Dönüştürücü, QR Kod ve Daha Fazlası</title>
     <meta name="description" content="ToolBox ile QR Kod oluşturun, renk paletleri keşfedin, JSON formatlanın, güçlü şifreler üretin. Tamamen ücretsiz, kayıt gerektirmez.">
     <meta name="keywords" content="online araçlar, qr kod oluşturucu, renk paleti, json formatlayıcı, şifre oluşturucu, kelime sayacı, ücretsiz araçlar">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- PDF & Word Dönüştürme İçin Kütüphaneler -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.21/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://unpkg.com/docx@7.3.0/build/index.js"></script>
 </head>
 <body>
 
@@ -24,8 +30,8 @@
     <nav class="navbar" id="navbar">
         <div class="nav-inner">
             <a href="#" class="logo" onclick="showHome()">
-                <span class="logo-box">⚡</span>
-                <span class="logo-text">Tool<span class="logo-accent">Box</span></span>
+                <img src="img/kitoox_logo.png" style="height: 32px; width: auto; object-fit: contain;" alt="Kitoox Logo">
+                <span class="logo-text">Kitoox</span>
             </a>
             <div class="nav-links">
                 <a href="#tools" class="nav-link">Araçlar</a>
@@ -47,7 +53,7 @@
                 <p class="hero-desc">QR Kod oluşturun, renk paletleri keşfedin, JSON dosyalarınızı formatlayın, güçlü şifreler üretin. Tek tıkla, ücretsiz.</p>
                 <div class="hero-stats">
                     <div class="stat-item">
-                        <span class="stat-num">6</span>
+                        <span class="stat-num">7</span>
                         <span class="stat-label">Araç</span>
                     </div>
                     <div class="stat-divider"></div>
@@ -70,6 +76,16 @@
                 <h2 class="section-title">Araçlar</h2>
                 <p class="section-sub">İhtiyacınıza uygun aracı seçin ve hemen kullanmaya başlayın.</p>
                 <div class="tools-grid">
+                    <!-- PDF Converter -->
+                    <div class="tool-card" onclick="openTool('pdf-converter')">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+                        </div>
+                        <h3 class="tool-name">PDF ⇄ Word Dönüştürücü</h3>
+                        <p class="tool-desc">Word dosyalarını PDF'e veya PDF'leri metin olarak Word'e tarayıcınızda dönüştürün.</p>
+                        <span class="tool-tag">Yeni 🚀</span>
+                    </div>
+
                     <!-- QR Code -->
                     <div class="tool-card" onclick="openTool('qrcode')">
                         <div class="tool-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
@@ -355,6 +371,27 @@
                 </div>
             </div>
 
+            <!-- PDF Converter Tool -->
+            <div class="tool-panel" id="tool-pdf-converter" style="display:none;">
+                <div class="tool-workspace" style="display: flex; gap: 40px;">
+                    <div class="workspace-left" style="flex: 1;">
+                        <h3 class="sub-title">📝 Word'den PDF'e</h3>
+                        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">(.docx yükleyin, PDF olarak indirin)</p>
+                        <input type="file" id="wordFileInput" accept=".docx" style="margin-bottom:16px; padding: 10px; border: 1px solid var(--border); border-radius: 6px; width: 100%;">
+                        <button class="btn-action btn-primary-action full-width" onclick="convertWordToPdf()">PDF'e Çevir ve İndir</button>
+                        <div id="wordToPdfStatus" style="margin-top:12px; font-size:14px; font-weight: 500;"></div>
+                    </div>
+                    
+                    <div class="workspace-right" style="flex: 1; border-left: 1px solid var(--border); padding-left: 40px;">
+                        <h3 class="sub-title">📕 PDF'ten Word'e</h3>
+                        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">(.pdf yükleyin, metinleri Word olarak indirin)</p>
+                        <input type="file" id="pdfFileInput" accept=".pdf" style="margin-bottom:16px; padding: 10px; border: 1px solid var(--border); border-radius: 6px; width: 100%;">
+                        <button class="btn-action btn-primary-action full-width" style="background:var(--secondary);" onclick="convertPdfToWord()">Word'e Çevir ve İndir</button>
+                        <div id="pdfToWordStatus" style="margin-top:12px; font-size:14px; font-weight: 500;"></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -364,8 +401,8 @@
             <div class="footer-grid">
                 <div>
                     <a href="#" class="logo footer-logo" onclick="showHome()">
-                        <span class="logo-box">⚡</span>
-                        <span class="logo-text">Tool<span class="logo-accent">Box</span></span>
+                        <img src="img/kitoox_logo.png" style="height: 24px; width: auto; object-fit: contain;" alt="Kitoox Logo">
+                        <span class="logo-text">Kitoox</span>
                     </a>
                     <p class="footer-desc">Ücretsiz online araçlar. Verileriniz güvende — her şey tarayıcınızda çalışır.</p>
                 </div>
@@ -386,7 +423,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 ToolBox. Tüm hakları saklıdır.</p>
+                <p>© 2026 Kitoox. Tüm hakları saklıdır.</p>
             </div>
         </div>
     </footer>
