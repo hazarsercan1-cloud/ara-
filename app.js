@@ -614,14 +614,23 @@ function convertWordToPdf() {
                 const element = document.createElement('div');
                 element.innerHTML = `
                 <style>
-                    /* Sayfa bölme hatalarını engellemek için CSS kuralları */
-                    img, p, h1, h2, h3, h4, h5, h6, table, tr, td, ul, li {
-                        page-break-inside: avoid;
-                        break-inside: avoid;
+                    /* Kesin Sayfa Bölme Kuralları */
+                    * {
+                        box-sizing: border-box;
+                    }
+                    img, p, h1, h2, h3, h4, h5, h6, table, tr, td, ul, li, figure {
+                        page-break-inside: avoid !important;
+                        break-inside: avoid !important;
+                        display: block; /* Kesilmeyi engellemek için block yapıyoruz */
                     }
                     img {
-                        max-width: 100%;
-                        height: auto;
+                        max-width: 100% !important;
+                        height: auto !important;
+                        display: block !important;
+                        margin: 15px 0 !important;
+                    }
+                    p {
+                        margin-bottom: 12px;
                     }
                 </style>
                 ${html}`;
@@ -633,12 +642,12 @@ function convertWordToPdf() {
                 element.style.color = '#1a1a1a';
                 
                 const opt = {
-                    margin:       [0.6, 0.5, 0.6, 0.5], // Üst, Sağ, Alt, Sol kenar boşlukları (inch)
+                    margin:       [0.6, 0.5, 0.6, 0.5],
                     filename:     file.name.replace('.docx', '.pdf'),
                     image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2, useCORS: true },
+                    html2canvas:  { scale: 2, useCORS: true, logging: false },
                     jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
-                    pagebreak:    { mode: ['css', 'legacy'] } // Sayfa bölmeyi akıllıca yap
+                    pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] } // En agresif engelleme
                 };
                 
                 html2pdf().set(opt).from(element).save().then(() => {
