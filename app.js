@@ -614,20 +614,14 @@ function convertWordToPdf() {
                 const element = document.createElement('div');
                 element.innerHTML = `
                 <style>
-                    /* Kesin Sayfa Bölme Kuralları */
-                    * {
-                        box-sizing: border-box;
-                    }
+                    * { box-sizing: border-box; }
                     img, p, h1, h2, h3, h4, h5, h6, table, tr, td, ul, li, figure {
-                        page-break-inside: avoid !important;
-                        break-inside: avoid !important;
-                        display: block; /* Kesilmeyi engellemek için block yapıyoruz */
+                        page-break-inside: avoid;
+                        break-inside: avoid;
                     }
                     img {
-                        max-width: 100% !important;
-                        height: auto !important;
-                        display: block !important;
-                        margin: 15px 0 !important;
+                        max-width: 100%;
+                        height: auto;
                     }
                     p {
                         margin-bottom: 12px;
